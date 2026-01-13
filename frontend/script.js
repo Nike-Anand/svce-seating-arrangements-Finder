@@ -1,7 +1,7 @@
 // API Configuration - automatically detects environment
 const API_BASE_URL = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
     ? 'http://localhost:10000'
-    : 'https://svce-seating-finder.onrender.com'; // Update this with your actual Render URL after deployment
+    : ''; // Empty string uses same domain (served by Flask)
 
 // DOM Elements
 const registerInput = document.getElementById('registerInput');

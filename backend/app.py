@@ -1,4 +1,4 @@
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, request, render_template
 from flask_cors import CORS
 import requests
 from bs4 import BeautifulSoup
@@ -8,7 +8,11 @@ import json
 import os
 from datetime import datetime
 
-app = Flask(__name__)
+# Configure Flask to serve frontend from the frontend directory
+app = Flask(__name__, 
+            template_folder='../frontend',
+            static_folder='../frontend',
+            static_url_path='')
 CORS(app)
 
 # Directory to store downloaded PDFs
@@ -273,6 +277,12 @@ def get_stats():
 
 @app.route('/')
 def index():
+    """Serve the frontend HTML page"""
+    return render_template('index.html')
+
+@app.route('/api')
+def api_info():
+    """API information endpoint"""
     return jsonify({
         'message': 'SVCE Seating Arrangement API',
         'endpoints': {
