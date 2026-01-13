@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SVCE Seating Arrangement Finder</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="logo-section">
+                <h1 class="title">SVCE Seating Finder</h1>
+                <p class="subtitle">Find your exam seating arrangement instantly</p>
+            </div>
+            <button id="refreshBtn" class="refresh-btn">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M21.5 2v6h-6M2.5 22v-6h6M2 11.5a10 10 0 0 1 18.8-4.3M22 12.5a10 10 0 0 1-18.8 4.2"/>
+                </svg>
+                Refresh Data
+            </button>
+        </div>
+
+        <div class="stats-card" id="statsCard">
+            <div class="stat-item">
+                <span class="stat-label">Last Updated</span>
+                <span class="stat-value" id="lastUpdated">Loading...</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-label">Total Records</span>
+                <span class="stat-value" id="totalRecords">-</span>
+            </div>
+        </div>
+
+        <div class="search-section">
+            <div class="search-box">
+                <svg class="search-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="11" cy="11" r="8"></circle>
+                    <path d="m21 21-4.35-4.35"></path>
+                </svg>
+                <input 
+                    type="text" 
+                    id="registerInput" 
+                    placeholder="Enter your register number (e.g., 22XXXXX)"
+                    autocomplete="off"
+                >
+                <button id="searchBtn" class="search-btn">Search</button>
+            </div>
+        </div>
+
+        <div id="loadingIndicator" class="loading-indicator" style="display: none;">
+            <div class="spinner"></div>
+            <p>Searching...</p>
+        </div>
+
+        <div id="resultsSection" class="results-section" style="display: none;">
+            <h2 class="results-title">Search Results</h2>
+            <div id="resultsContainer"></div>
+        </div>
+
+        <div id="noResults" class="no-results" style="display: none;">
+            <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <circle cx="12" cy="12" r="10"></circle>
+                <line x1="12" y1="8" x2="12" y2="12"></line>
+                <line x1="12" y1="16" x2="12.01" y2="16"></line>
+            </svg>
+            <h3>No Results Found</h3>
+            <p>The register number you entered was not found in the seating arrangements.</p>
+            <p class="hint">Please check your register number and try again.</p>
+        </div>
+
+        <div id="errorMessage" class="error-message" style="display: none;"></div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
