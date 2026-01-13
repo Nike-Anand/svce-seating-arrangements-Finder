@@ -1,4 +1,7 @@
-const API_BASE_URL = 'http://localhost:5000';
+// API Configuration - automatically detects environment
+const API_BASE_URL = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
+    ? 'http://localhost:10000'
+    : 'https://svce-seating-finder.onrender.com'; // Update this with your actual Render URL after deployment
 
 // DOM Elements
 const registerInput = document.getElementById('registerInput');
@@ -29,20 +32,20 @@ async function loadStats() {
     try {
         const response = await fetch(`${API_BASE_URL}/api/stats`);
         const data = await response.json();
-        
+
         if (data.last_updated) {
             const date = new Date(data.last_updated);
             lastUpdated.textContent = date.toLocaleString();
         } else {
             lastUpdated.textContent = 'No data yet';
         }
-        
+
         totalRecords.textContent = data.total_entries || 0;
     } catch (error) {
         console.error('Error loading stats:', error);
         lastUpdated.textContent = 'Error loading';
         totalRecords.textContent = '-';
-        
+
         // Show a subtle message if no data is available
         if (error.message.includes('404')) {
             showError('No data available yet. Click "Refresh Data" to fetch the latest seating arrangements.');
@@ -52,27 +55,27 @@ async function loadStats() {
 
 async function performSearch() {
     const registerNo = registerInput.value.trim();
-    
+
     if (!registerNo) {
         showError('Please enter a register number');
         return;
     }
-    
+
     // Hide previous results
     hideAll();
     loadingIndicator.style.display = 'flex';
-    
+
     try {
         const response = await fetch(`${API_BASE_URL}/api/search?register_no=${encodeURIComponent(registerNo)}`);
         const data = await response.json();
-        
+
         loadingIndicator.style.display = 'none';
-        
+
         if (data.error) {
             showError(data.error);
             return;
         }
-        
+
         if (data.found && data.results.length > 0) {
             displayResults(data.results);
         } else {
@@ -88,12 +91,12 @@ async function performSearch() {
 function displayResults(results) {
     resultsSection.style.display = 'block';
     resultsContainer.innerHTML = '';
-    
+
     results.forEach((result, index) => {
         const card = document.createElement('div');
         card.className = 'result-card';
         card.style.animationDelay = `${index * 0.1}s`;
-        
+
         card.innerHTML = `
             <div class="result-header">
                 <span class="register-badge">${result.register_no}</span>
@@ -121,7 +124,7 @@ function displayResults(results) {
                 </div>
             ` : ''}
         `;
-        
+
         resultsContainer.appendChild(card);
     });
 }
@@ -132,19 +135,19 @@ async function refreshData() {
         <div class="spinner" style="width: 20px; height: 20px; border-width: 2px;"></div>
         Refreshing...
     `;
-    
+
     hideAll();
     loadingIndicator.style.display = 'flex';
     loadingIndicator.querySelector('p').textContent = 'Fetching latest data from SVCE website...';
-    
+
     try {
         const response = await fetch(`${API_BASE_URL}/api/refresh`, {
             method: 'POST'
         });
         const data = await response.json();
-        
+
         loadingIndicator.style.display = 'none';
-        
+
         if (data.success) {
             showSuccess(`Successfully updated ${data.total_entries} entries!`);
             loadStats();
