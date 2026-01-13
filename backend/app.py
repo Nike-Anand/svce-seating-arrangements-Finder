@@ -15,9 +15,12 @@ app = Flask(__name__,
             static_url_path='')
 CORS(app)
 
+# Get the directory where this script is located
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+
 # Directory to store downloaded PDFs
-PDF_DIR = "pdfs"
-DATA_FILE = "seating_data.json"
+PDF_DIR = os.path.join(BASE_DIR, "pdfs")
+DATA_FILE = os.path.join(BASE_DIR, "seating_data.json")
 
 if not os.path.exists(PDF_DIR):
     os.makedirs(PDF_DIR)
@@ -264,7 +267,12 @@ def refresh_data():
 def get_stats():
     """Get statistics about the data"""
     if not os.path.exists(DATA_FILE):
-        return jsonify({'error': 'No data available'}), 404
+        return jsonify({
+            'last_updated': None,
+            'total_entries': 0,
+            'available': False,
+            'message': 'No data available yet. Click "Refresh Data" to fetch seating arrangements.'
+        })
     
     with open(DATA_FILE, 'r') as f:
         data = json.load(f)
