@@ -1,5 +1,5 @@
 "# SVCE Seating Arrangement Finder
-
+##
 A web application to help students find their seating arrangements for exams at Sri Venkateswara College of Engineering (SVCE). The app automatically scrapes the SVCE website, parses PDF seating arrangements, and provides a clean search interface.
 
 ## Features
