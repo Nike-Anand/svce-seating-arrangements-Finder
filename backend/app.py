@@ -13,7 +13,7 @@ app = Flask(__name__,
             template_folder='../frontend',
             static_folder='../frontend',
             static_url_path='')
-CORS(app)
+CORS(app, origins=['*'])
 
 # Get the directory where this script is located
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -30,7 +30,11 @@ def scrape_pdf_links():
     try:
         # The actual page with PDF links is in an iframe
         iframe_url = "https://www.svce.ac.in/coe-ims/files.php"
-        response = requests.get(iframe_url, timeout=10)
+        headers = {
+            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'
+        }
+        response = requests.get(iframe_url, timeout=15, headers=headers)
+        response.raise_for_status()
         soup = BeautifulSoup(response.content, 'html.parser')
         
         pdf_links = []
@@ -64,7 +68,11 @@ def scrape_pdf_links():
                         'session': session
                     })
         
+        print(f"Successfully scraped {len(pdf_links)} PDF links")
         return pdf_links
+    except requests.RequestException as e:
+        print(f"Network error scraping PDF links: {e}")
+        return []
     except Exception as e:
         print(f"Error scraping PDF links: {e}")
         import traceback
@@ -293,12 +301,18 @@ def api_info():
     """API information endpoint"""
     return jsonify({
         'message': 'SVCE Seating Arrangement API',
+        'status': 'running',
         'endpoints': {
             '/api/search?register_no=<number>': 'Search for a register number',
             '/api/refresh': 'Refresh data from website (POST)',
             '/api/stats': 'Get data statistics'
         }
     })
+
+@app.route('/health')
+def health_check():
+    """Health check endpoint"""
+    return jsonify({'status': 'healthy', 'timestamp': datetime.now().isoformat()})
 
 if __name__ == '__main__':
     port = int(os.environ.get('PORT', 10000))

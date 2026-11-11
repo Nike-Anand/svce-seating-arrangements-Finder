@@ -1,148 +1,168 @@
-"# SVCE Seating Arrangement Finder
-##
-A web application to help students find their seating arrangements for exams at Sri Venkateswara College of Engineering (SVCE). The app automatically scrapes the SVCE website, parses PDF seating arrangements, and provides a clean search interface.
+# 🎓 SVCE Seating Arrangement Finder
 
-## Features
+<p align="center">
+  <img src="icon.png" alt="SVCE Seating Finder Logo" width="100" style="border-radius: 20%;" />
+</p>
 
-- 🔍 **Quick Search**: Search by register number to find your seat
-- 📄 **PDF Parsing**: Automatically extracts data from official SVCE PDFs
-- 🔄 **Auto Refresh**: Update data with latest seating arrangements
-- 📊 **Statistics**: View total records and last update time
-- 🎨 **Modern UI**: Clean, responsive interface with smooth animations
+<p align="center">
+  <b>A comprehensive, production-ready mobile and web solution for Sri Venkateswara College of Engineering (SVCE) students to instantly look up exam seating arrangements, hall allocations, and seat numbers.</b>
+</p>
 
-## Tech Stack
+<p align="center">
+  <img src="https://img.shields.io/badge/Status-Completed-success?style=for-the-badge" alt="Status Completed" />
+  <img src="https://img.shields.io/badge/Flutter-02569B?style=for-the-badge&logo=flutter&logoColor=white" alt="Flutter" />
+  <img src="https://img.shields.io/badge/Dart-0175C2?style=for-the-badge&logo=dart&logoColor=white" alt="Dart" />
+  <img src="https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white" alt="Python" />
+  <img src="https://img.shields.io/badge/Flask-000000?style=for-the-badge&logo=flask&logoColor=white" alt="Flask" />
+  <img src="https://img.shields.io/badge/Android-3DDC84?style=for-the-badge&logo=android&logoColor=white" alt="Android" />
+</p>
 
-- **Backend**: Flask (Python)
-- **Frontend**: HTML, CSS, JavaScript
-- **PDF Processing**: pdfplumber
-- **Web Scraping**: BeautifulSoup4, Requests
+---
 
-## Deployment on Render
+## 📱 Mobile App Demo
 
-### Prerequisites
-- GitHub account
-- Render account (free tier works fine)
+<p align="center">
+  <img src="demo.gif" alt="SVCE Seating Finder Mobile App Demo" width="300" style="border-radius: 12px; box-shadow: 0 8px 24px rgba(0,0,0,0.15);" />
+</p>
+<p align="center"><i>Live Flutter mobile app in action — instant search, seat highlights, and exam notifications.</i></p>
 
-### Steps
+---
 
-1. **Push to GitHub** (if not already done)
-   ```bash
-   git add .
-   git commit -m "Prepare for Render deployment"
-   git push origin main
-   ```
+## 🌟 Key Highlights & Features
 
-2. **Deploy on Render**
-   - Go to [Render Dashboard](https://dashboard.render.com/)
-   - Click **New** → **Web Service**
-   - Choose **Build and deploy from a Git repository**
-   - Connect your GitHub repository
-   - Configure the service:
-     - **Name**: `svce-seating-finder` (or your preferred name)
-     - **Region**: Choose closest to you
-     - **Branch**: `main`
-     - **Runtime**: `Python 3`
-     - **Build Command**: `pip install -r requirements.txt`
-     - **Start Command**: `gunicorn backend.app:app`
-   - Choose **Free** instance type
-   - Click **Create Web Service**
+- 🔍 **Instant Register Number Search**: Rapid search with auto-complete that highlights hall numbers, seat rows, and exam session info.
+- ⏰ **Automated Exam Reminders**: Integrated background service (`flutter_background_service`) and local notification alarms (`flutter_local_notifications`) to alert students before exam start.
+- 📦 **Offline Support & Bundled Data**: Built-in cached database so students can find their seats even with low campus connectivity.
+- 📄 **Automated PDF Parsing**: Automatically scrapes SVCE's examination portal and extracts tabular seating data from official PDFs with `pdfplumber` and `Syncfusion PDF`.
+- 🔄 **Real-Time Data Refresh**: One-click backend scraping triggers synchronization with newly published seating lists.
+- 🎨 **Material 3 Modern UI**: Adaptive design with smooth micro-interactions, dark/light theme support, and responsive layouts for both mobile and web.
+- 🚀 **Cloud Deployment Ready**: Preconfigured with `render.yaml` for zero-configuration deployment on Render.
 
-3. **Update Frontend URL**
-   - After deployment, Render will give you a URL like `https://your-app-name.onrender.com`
-   - Update `frontend/script.js` line 4 with your actual Render URL
-   - Commit and push the change
+---
 
-4. **Access Your App**
-   - Backend API: `https://your-app-name.onrender.com`
-   - Frontend: Open `frontend/index.html` in a browser or deploy separately
-
-### Important Notes
-
-- **Free Tier**: Services spin down after 15 minutes of inactivity. First request after spin-down will be slow (~30 seconds).
-- **Port Binding**: The app automatically binds to Render's PORT environment variable (default: 10000).
-- **CORS**: Already configured to allow cross-origin requests.
-
-## Local Development
-
-### Setup
-
-1. **Clone the repository**
-   ```bash
-   git clone https://github.com/Nike-Anand/svce-seating-arrangements-Finder.git
-   cd svce-seating-arrangements-Finder
-   ```
-
-2. **Install dependencies**
-   ```bash
-   pip install -r requirements.txt
-   ```
-
-3. **Run the backend**
-   ```bash
-   python backend/app.py
-   ```
-   The API will be available at `http://localhost:10000`
-
-4. **Open the frontend**
-   - Open `frontend/index.html` in your browser
-   - Or use a local server:
-     ```bash
-     cd frontend
-     python -m http.server 8000
-     ```
-   - Then visit `http://localhost:8000`
-
-## Usage
-
-1. **Refresh Data**: Click "Refresh Data" to fetch the latest seating arrangements from SVCE website
-2. **Search**: Enter your register number and click "Search" or press Enter
-3. **View Results**: See your hall, seat number, and exam details
-4. **PDF Link**: Click "View Full PDF" to see the original PDF
-
-## API Endpoints
-
-- `GET /` - API information
-- `GET /api/search?register_no=<number>` - Search for a register number
-- `POST /api/refresh` - Refresh data from SVCE website
-- `GET /api/stats` - Get statistics (last updated, total entries)
-
-## Project Structure
+## 🏗️ System Architecture
 
 ```
 svce-seating-arrangements-Finder/
-├── backend/
-│   ├── app.py              # Flask application
-│   ├── seating_data.json   # Cached seating data
-│   └── test_parser.py      # PDF parser testing
-├── frontend/
-│   ├── index.html          # Main UI
-│   ├── script.js           # Frontend logic
-│   └── style.css           # Styling
-├── requirements.txt        # Python dependencies
-├── render.yaml            # Render deployment config
-└── README.md              # This file
+├── lib/                             # Flutter Mobile Application
+│   ├── main.dart                    # App bootstrap & background worker init
+│   ├── models/                      # Seating & Reminder data models
+│   ├── screens/                     # Home, Search, & Reminder Setup screens
+│   └── services/                    # API, Notification, & Background services
+├── android/                         # Native Android project configuration
+├── ios/                             # Native iOS project configuration
+├── backend/                         # Flask REST API & Web Scraper
+│   ├── app.py                       # API endpoints & PDF scraping engine
+│   ├── seating_data.json            # Parsed seating dataset
+│   └── test_parser.py               # PDF parser tests
+├── frontend/                        # Web Interface
+│   ├── index.html                   # Web application UI
+│   ├── script.js                    # Web search client
+│   └── style.css                    # Responsive CSS styling
+├── SVCE_Seating_Finder.apk          # Pre-compiled Android Release package
+├── demo.gif                         # Animated app preview for README
+├── Demo.mp4                         # High-resolution screen recording
+├── icon.png                         # Application icon
+├── pubspec.yaml                     # Flutter dependencies
+├── requirements.txt                 # Python backend dependencies
+└── render.yaml                      # Render cloud deployment config
 ```
 
-## Troubleshooting
+---
 
-### Backend not responding
-- Check if the backend is running
-- Verify the PORT environment variable is set correctly
-- Check Render logs for errors
+## 🚀 Quick Start Guide
 
-### No data found
-- Click "Refresh Data" to fetch latest data from SVCE
-- Ensure the SVCE website is accessible
-- Check backend logs for scraping errors
+### 1. Download & Install Android App (Direct APK)
 
-### CORS errors
-- Ensure flask-cors is installed
-- Verify CORS is enabled in `app.py`
+You can directly install the pre-compiled Android application:
+- 📲 **Download APK**: [`SVCE_Seating_Finder.apk`](SVCE_Seating_Finder.apk) directly from this repository and install on any Android device.
 
-## Contributing
+---
 
-Contributions are welcome! Please feel free to submit a Pull Request.
+### 2. Running the Flutter Mobile App (Development)
 
-## License
+**Prerequisites**: [Flutter SDK](https://docs.flutter.dev/get-started/install) (3.0+) and Android Studio / VS Code.
 
-This project is open source and available under the MIT License." 
+```bash
+# Get dependencies
+flutter pub get
+
+# Run on connected device or emulator
+flutter run
+
+# Build release APK
+flutter build apk --release
+```
+
+---
+
+### 3. Running the Backend Server
+
+**Prerequisites**: Python 3.9+
+
+```bash
+# 1. Create and activate a virtual environment
+python -m venv .venv
+source .venv/bin/activate    # On Windows: .\.venv\Scripts\Activate.ps1
+
+# 2. Install dependencies
+pip install -r requirements.txt
+
+# 3. Start the Flask API
+python backend/app.py
+```
+The backend API will be available at `http://localhost:10000`.
+
+---
+
+### 4. Running the Web Frontend
+
+Simply open `frontend/index.html` in any modern web browser, or serve it with Python:
+
+```bash
+cd frontend
+python -m http.server 8000
+```
+Then navigate to `http://localhost:8000`.
+
+---
+
+## 📡 Backend API Reference
+
+| Endpoint | Method | Description |
+| :--- | :---: | :--- |
+| `/` | `GET` | Health status and API discovery |
+| `/health` | `GET` | Health check endpoint for uptime monitoring |
+| `/api/search?register_no=<reg_no>` | `GET` | Retrieve student's exam hall and seat details |
+| `/api/stats` | `GET` | Get total seating records and last update timestamp |
+| `/api/refresh` | `POST` | Trigger scraper to fetch and parse latest SVCE PDFs |
+
+---
+
+## ☁️ Deployment on Render
+
+This project is configured for automated deployment via [Render](https://render.com/):
+
+1. Connect your GitHub repository to Render.
+2. Select **Web Service** using `render.yaml` or set:
+   - **Environment**: `Python 3`
+   - **Build Command**: `pip install -r requirements.txt`
+   - **Start Command**: `gunicorn backend.app:app`
+   - **Health Check Path**: `/health`
+3. Point your web frontend (`frontend/script.js`) or Flutter app (`api_service.dart`) to your Render live URL.
+
+---
+
+## 🛠️ Built With
+
+- **Mobile**: [Flutter](https://flutter.dev/) & [Dart](https://dart.dev/)
+- **Backend**: [Flask](https://flask.palletsprojects.com/), [Gunicorn](https://gunicorn.org/)
+- **Scraping & Parsing**: [BeautifulSoup4](https://www.crummy.com/software/BeautifulSoup/), [pdfplumber](https://github.com/jsvine/pdfplumber), [Syncfusion Flutter PDF](https://pub.dev/packages/syncfusion_flutter_pdf)
+- **Background Tasks & Notifications**: [flutter_local_notifications](https://pub.dev/packages/flutter_local_notifications), [flutter_background_service](https://pub.dev/packages/flutter_background_service)
+- **Deployment**: [Render](https://render.com/)
+
+---
+
+## 📄 License
+
+This project is licensed under the MIT License - feel free to use and adapt for academic and educational purposes.

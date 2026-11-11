@@ -1,0 +1,41 @@
+# Python
+.venv/
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.env
+
+# Flutter / Dart
+.dart_tool/
+.flutter-plugins
+.flutter-plugins-dependencies
+.packages
+.pub-cache/
+.pub/
+build/
+*.aab
+
+# Keep the release APK since user requested to track it in repo
+!SVCE_Seating_Finder.apk
+
+# Android / Gradle
+.gradle/
+**/android/.gradle/
+android/app/build/
+android/app/debug/
+android/app/release/
+
+# iOS
+**/ios/Flutter/.last_build_id
+
+# IDE / Editor
+.idea/
+*.iml
+*.ipr
+*.iws
+.vscode/
+
+# OS files
+.DS_Store
+Thumbs.db
