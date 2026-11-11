@@ -61,7 +61,6 @@ svce-seating-arrangements-Finder/
 │   └── style.css                    # Responsive CSS styling
 ├── SVCE_Seating_Finder.apk          # Pre-compiled Android Release package
 ├── demo.gif                         # Animated app preview for README
-├── Demo.mp4                         # High-resolution screen recording
 ├── icon.png                         # Application icon
 ├── pubspec.yaml                     # Flutter dependencies
 ├── requirements.txt                 # Python backend dependencies
