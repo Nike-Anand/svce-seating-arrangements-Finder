@@ -35,19 +35,6 @@ This app automates the entire process: it scrapes the official portal, parses th
 - **Exam Reminders** — Background notifications alert you before your exam session begins.
 - **Direct PDF Access** — View and verify directly against the original college notice with one tap.
 
----
-
-## 📁 Repository Overview
-
-```
-├── lib/                     # Flutter mobile application
-├── android/                 # Android platform files & manifest
-├── backend/                 # Flask scraper engine & API
-│   ├── app.py               # Scraper & REST endpoints
-│   └── seating_data.json    # Cached seating data
-├── demo.gif                 # App preview demo
-└── SVCE_Seating_Finder.apk  # Pre-built release APK
-```
 
 ---
 
