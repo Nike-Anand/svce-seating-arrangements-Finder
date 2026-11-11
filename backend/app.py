@@ -1,4 +1,4 @@
-from flask import Flask, jsonify, request, render_template
+from flask import Flask, jsonify, request
 from flask_cors import CORS
 import requests
 from bs4 import BeautifulSoup
@@ -8,11 +8,7 @@ import json
 import os
 from datetime import datetime
 
-# Configure Flask to serve frontend from the frontend directory
-app = Flask(__name__, 
-            template_folder='../frontend',
-            static_folder='../frontend',
-            static_url_path='')
+app = Flask(__name__)
 CORS(app, origins=['*'])
 
 # Get the directory where this script is located
@@ -292,10 +288,6 @@ def get_stats():
     })
 
 @app.route('/')
-def index():
-    """Serve the frontend HTML page"""
-    return render_template('index.html')
-
 @app.route('/api')
 def api_info():
     """API information endpoint"""
@@ -305,7 +297,8 @@ def api_info():
         'endpoints': {
             '/api/search?register_no=<number>': 'Search for a register number',
             '/api/refresh': 'Refresh data from website (POST)',
-            '/api/stats': 'Get data statistics'
+            '/api/stats': 'Get data statistics',
+            '/health': 'Health check endpoint'
         }
     })
 
